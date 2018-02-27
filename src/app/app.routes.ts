@@ -1,16 +1,18 @@
-import {HttpClient} from "@angular/common/http";
-import {Injectable} from "@angular/core";
-import {Observable} from "rxjs/Observable";
-import {User} from "../classes/user";
+import {RouterModule, Routes} from "@angular/router";
+import {SplashComponent} from "./components/splash.component";
+import {UserService} from "./services/user.service";
+import {APP_BASE_HREF} from "@angular/common";
 
-@Injectable()
-export class UserService {
 
-	constructor(protected http: HttpClient) {}
+export const allAppComponents = [SplashComponent];
 
-	private userUrl = "https://jsonplaceholder.typicode.com/users/";
+export const routes: Routes = [
+	{path: "", component: SplashComponent}
+];
 
-	getAllUsers() : Observable<User[]> {
-		return(this.http.get<User[]>(this.userUrl));
-	}
-}
+export const appRoutingProviders: any[] = [
+	{provide: APP_BASE_HREF, useValue: window["_base_href"]},
+	UserService
+];
+
+export const routing = RouterModule.forRoot(routes);
